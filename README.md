@@ -12,7 +12,7 @@ School Management System helps to manage a Short-term training unit, it provides
 | 5   | Bùi Công Danh          | 20198211   | danh.bc198211@sis.hust.edu.vn   | 0387142222   |
 
 #### Installing dependencies
-
-
-
+```
+composer install
+```
 #### Download and setup
