@@ -21,7 +21,7 @@
           <div class="col-lg-3 col-6">
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>${{ number_format($TotalPaidAmount, 2) }}</h3>
+                {{-- <h3>${{ number_format($TotalPaidAmount, 2) }}</h3> --}}
                 <p>Total Paid Amount</p>
               </div>
               <div class="icon">
@@ -38,7 +38,6 @@
             <div class="small-box bg-success">
               <div class="inner">
                 <h3>{{ $TotalStudent }}</h3>
-
                 <p>Total Student</p>
               </div>
               <div class="icon">
@@ -52,7 +51,7 @@
           <div class="col-lg-3 col-6">
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>{{ $TotalNoticeBoard }}</h3>
+                {{-- <h3>{{ $TotalNoticeBoard }}</h3> --}}
                 <p>Notice Board</p>
               </div>
               <div class="icon">
@@ -65,7 +64,7 @@
            <div class="col-lg-3 col-6">
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>{{ $TotalAttendance  }}</h3>
+                {{-- <h3>{{ $TotalAttendance  }}</h3> --}}
                 <p>Total Attendance</p>
               </div>
               <div class="icon">
@@ -79,7 +78,7 @@
           <div class="col-lg-3 col-6">
             <div class="small-box bg-primary">
               <div class="inner">
-                <h3>{{ $TotalSubmittedHomework }}</h3>
+                {{-- <h3>{{ $TotalSubmittedHomework }}</h3> --}}
                 <p>Total Submitted Homework</p>
               </div>
               <div class="icon">
