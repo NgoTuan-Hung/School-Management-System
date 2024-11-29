@@ -11,6 +11,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ParentController;
+use App\Http\Controllers\CommunicateController;
+
 
 
 
@@ -136,4 +138,7 @@ Route::group(['middleware' => 'parent'], function(){
 
     Route::get('parent/change_password',[UserController::class,'change_password']);
     Route::post('parent/change_password',[UserController::class,'update_change_password']);
+
+    Route::get('parent/my_notice_board', [CommunicateController::class, 'MyNoticeBoardParent']);
+    Route::get('parent/my_student', [ParentController::class, 'myStudentParent']);
 });
