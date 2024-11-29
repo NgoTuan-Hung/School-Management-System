@@ -9,6 +9,7 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\ClassSubjectController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ParentController;
 use App\Http\Controllers\CommunicateController;
@@ -141,4 +142,6 @@ Route::group(['middleware' => 'parent'], function(){
 
     Route::get('parent/my_notice_board', [CommunicateController::class, 'MyNoticeBoardParent']);
     Route::get('parent/my_student', [ParentController::class, 'myStudentParent']);
+
+    Route::get('parent/my_student/attendance/{student_id}', [AttendanceController::class, 'MyAttendanceParent']);
 });
