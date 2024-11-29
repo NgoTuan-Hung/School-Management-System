@@ -126,9 +126,13 @@ Route::group(['middleware' => 'teacher'], function(){
 
 Route::group(['middleware' => 'student'], function(){
     Route::get('student/dashboard',[DashboardController::class,'dashboard']);
-
+    //FeesCollectionController
+    Route::get('student/fees_collection', [FeesCollectionController::class, 'CollectFeesStudent']);
+    Route::post('student/fees_collection', [FeesCollectionController::class, 'CollectFeesStudentPayment']);
+    //
     Route::get('student/change_password',[UserController::class,'change_password']);
     Route::post('student/change_password',[UserController::class,'update_change_password']);
+    
 });
 
 Route::group(['middleware' => 'parent'], function(){
