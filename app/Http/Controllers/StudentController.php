@@ -225,6 +225,10 @@ class StudentController extends Controller
 
     public function delete($id)
     {
+        //Find the user with id and delete from database
+        // $user = User::findOrFail($id);
+        // $user -> delete();
+        
         $getRecord = User::getSingle($id);
         if(!empty($getRecord))
         {
