@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\NoticeBoardModel;
 use App\Models\NoticeBoardMessageModel;
 use App\Mail\SendEmailUserMail;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Mail;
 class CommunicateController extends Controller
 {

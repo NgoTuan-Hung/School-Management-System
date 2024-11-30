@@ -160,6 +160,7 @@ class User extends Authenticatable
     }
 
 
+    //parent
     static public function getMyStudent($parent_id)
     {
         $return = self::select('users.*', 'class.name as class_name','parent.name as parent_name')

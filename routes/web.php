@@ -12,6 +12,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ParentController;
 use App\Http\Controllers\FeesCollectionController;
+use App\Http\Controllers\CommunicateController;
 
 
 
