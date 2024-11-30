@@ -110,7 +110,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{url('public/dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+          <img  style="height: 40px;width: 40px;" src="{{ Auth::user()->getProfileDirect() }}" class="img-circle elevation-2" alt="{{ Auth::user()->name }}">
         </div>
         <div class="info">
           <a href="#" class="d-block">{{Auth::user() -> name}}</a>
@@ -191,6 +191,16 @@
           </p>
         </a>
       </li>
+
+      <li class="nav-item">
+        <a href="{{ url('admin/account') }}" class="nav-link @if(Request::segment(2) == 'account') active @endif">
+          <i class="nav-icon far fa-user"></i>
+          <p>
+            My Account
+          </p>
+        </a>
+      </li>
+      
 
       <li class="nav-item">
         <a href="{{url('admin/change_password') }}" class="nav-link @if(Request::segment(2)=='change_password') active @endif">

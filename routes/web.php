@@ -60,6 +60,11 @@ Route::group(['middleware' => 'admin'], function(){
     Route::get('admin/admin/edit/{id}',[AdminController::class,'edit']);
     Route::post('admin/admin/edit/{id}',[AdminController::class,'update']);
     Route::get('admin/admin/delete/{id}',[AdminController::class,'delete']);
+    
+    //admin my account
+    Route::get('admin/account', [UserController::class, 'MyAccount']);
+    Route::post('admin/account', [UserController::class, 'UpdateMyAccountAdmin']);
+
 
     // student 
     Route::get('admin/student/list', [StudentController::class, 'list']);
