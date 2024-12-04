@@ -55,13 +55,17 @@ class User extends Authenticatable
         if (!empty(request()->get('email'))) {
             $return = $return->where('email', 'like', '%' . request()->get('email') . '%');
         }
-
-        if(!empty(request()->get('name')))
-        {
+        if (!empty(request()->get('name'))) {
             $name = request()->get('name');
-            // Kiểm tra tên bắt đầu với ký tự nhập vào
-            $return = $return->where('users.name', 'like', $name.'%');
+            
+            // Loại bỏ khoảng trắng 
+            $nameWithoutSpaces = str_replace(' ', '', $name);
+            
+            $return = $return->where(function ($query) use ($nameWithoutSpaces) {
+                $query->whereRaw("REPLACE(users.name, ' ', '') LIKE ?", ['%' . $nameWithoutSpaces . '%']);
+            });
         }
+        
 
         if (!empty(request()->get('date'))) {
             $return = $return->whereDate('created_at' ,'=' ,request()->get('date'));

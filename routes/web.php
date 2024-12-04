@@ -37,11 +37,17 @@ use App\Http\Controllers\AssignClassTeacher;
 // });
 
 
-Route::get('/',[AuthController::class,'login']);
+//Testing api:
+// *********************************************
+// Route::get('admin/assign_class_teacher/list',[AssignClassTeacher::class,'list']);
+// Route::get('admin/assign_class_teacher/add',[AssignClassTeacher::class,'add']);
+
+// ********************************************
 
 // Route Login, Logout
 Route::post('login',[AuthController::class,'AuthLogin']);
 Route::get('logout',[AuthController::class,'logout']);
+
 
 //Route forgot password
 Route::get('forgot-password',[AuthController::class,'forgotpassword']);

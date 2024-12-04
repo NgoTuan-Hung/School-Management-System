@@ -11,17 +11,40 @@ use Symfony\Component\Console\Input\Input;
 
 class AssignClassTeacher extends Controller
 {
-    public function list (){
-        $data['getRecord'] = AssignClassTeacherModel::getRecord();
-        $data['header_title'] = "Assign Class Teacher";
-        return view('admin.assign_class_teacher.list', $data);
+    public function list(Request $request)
+{
+    $getRecord = AssignClassTeacherModel::getRecord();
+
+    if ($request->wantsJson()) {
+        return response()->json([
+            'success' => true,
+            'data' => $getRecord,
+            'message' => 'Assign class teacher list retrieved successfully.'
+        ], 200);
     }
+    // Nếu không phải API, trả về view như cũ
+    $data['getRecord'] = $getRecord;
+    $data['header_title'] = "Assign Class Teacher";
+    return view('admin.assign_class_teacher.list', $data);
+}
 
-    public function add(){
+
+    public function add(Request $request){
+        $getClass = ClassModel::getClass();
+        $getTeacher =  User::getTeacherClass();
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'class' => $getClass,
+                'teacher'=> $getTeacher,
+                'message' => 'Assign class teacher list retrieved successfully.'
+            ], 200);
+        }
+
         $data['header_title'] = "Add Assign Class Teacher";
-        $data['getClass'] = ClassModel::getClass();
-        $data['getTeacher'] = User::getTeacherClass();
-
+        $data['getClass'] = $getClass;
+        $data['getTeacher'] = $getTeacher;
         return view('admin.assign_class_teacher.add', $data);
     }
 

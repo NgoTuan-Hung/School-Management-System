@@ -111,10 +111,6 @@ class AuthController extends Controller
     // Handling logging out the system:
     public function logout(){
         Auth::logout();
-        // session và xóa cookie trên cả phía client:
-        session()->invalidate();
-        session()->regenerateToken();
-
         return redirect(url(''));
     }
 }
