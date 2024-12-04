@@ -13,6 +13,8 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ParentController;
 use App\Http\Controllers\FeesCollectionController;
 use App\Http\Controllers\CommunicateController;
+use App\Http\Controllers\AssignClassTeacher;
+
 
 
 
@@ -127,6 +129,11 @@ Route::group(['middleware' => 'admin'], function(){
     Route::get('admin/assign_subject/edit_single/{id}',[ClassSubjectController::class,'edit_single']);
     Route::post('admin/assign_subject/edit_single/{id}',[ClassSubjectController::class,'update_single']);
     
+    //assgin_class_teacher:
+    Route::get('admin/assign_class_teacher/list',[AssignClassTeacher::class,'list']);
+    Route::get('admin/assign_class_teacher/add',[AssignClassTeacher::class,'add']);
+    Route::post('admin/assign_class_teacher/add',[AssignClassTeacher::class,'insert']);
+
     
     //change password url:
     Route::get('admin/change_password',[UserController::class,'change_password']);

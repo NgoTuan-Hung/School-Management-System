@@ -12,7 +12,7 @@ use App\Models\SubjectModel;
 
 class ClassSubjectController extends Controller
 {
-    public function list(Request $request)
+    public function list()
     {
         $data['getRecord'] = ClassSubjectModel::getRecord();
         $data['header_title'] = "Subject Assign List";
