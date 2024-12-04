@@ -47,8 +47,6 @@ use App\Http\Controllers\AssignClassTeacher;
 // Route Login, Logout
 Route::post('login',[AuthController::class,'AuthLogin']);
 Route::get('logout',[AuthController::class,'logout']);
-
-
 //Route forgot password
 Route::get('forgot-password',[AuthController::class,'forgotpassword']);
 Route::post('forgot-password',[AuthController::class,'PostForgotPassword']);
@@ -139,7 +137,6 @@ Route::group(['middleware' => 'admin'], function(){
     Route::get('admin/assign_class_teacher/list',[AssignClassTeacher::class,'list']);
     Route::get('admin/assign_class_teacher/add',[AssignClassTeacher::class,'add']);
     Route::post('admin/assign_class_teacher/add',[AssignClassTeacher::class,'insert']);
-
     
     //change password url:
     Route::get('admin/change_password',[UserController::class,'change_password']);
