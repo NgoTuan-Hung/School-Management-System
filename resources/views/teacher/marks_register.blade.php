@@ -21,27 +21,28 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Search Marks Record</h3>
+                <h3 class="card-title">Search Marks Register</h3>
               </div>
               <form method="get" action="">
                 <div class="card-body">
                   <div class="row">
                     
-                   <div class="form-group col-md-3">
-                    <label>Examination</label>
+                  
+                  <div class="form-group col-md-3">
+                    <label>Exam</label>
                     <select class="form-control" name="exam_id" required>
                         <option value="">Select</option>     
-                        @foreach($examList as $exam)                                          <!-- Changed variable name from 'getExam' to 'examList' -->
+                        @foreach($getExam as $exam)                                         
                           <option {{ (Request::get('exam_id') == $exam->exam_id) ? 'selected' : '' }} value="{{ $exam->exam_id }}">{{ $exam->exam_name }}</option>
                         @endforeach
                     </select>
                   </div>
 
                   <div class="form-group col-md-3">
-                    <label>Grade</label>
+                    <label>Class</label>
                     <select class="form-control" name="class_id" required>
                         <option value="">Select</option>                                              
-                        @foreach($classList as $class)                                          <!-- Changed variable name from 'getClass' to 'classList' -->
+                        @foreach($getClass as $class)                                         
                           <option {{ (Request::get('class_id') == $class->class_id) ? 'selected' : '' }} value="{{ $class->class_id }}">{{ $class->class_name }}</option>
                         @endforeach
                     </select>
@@ -51,18 +52,23 @@
                   <div class="form-group col-md-3">
                     <button class="btn btn-primary" type="submit" style="margin-top: 30px;">Search</button>
                     <a href="{{ url('admin/examinations/marks_register') }}" class="btn btn-success" style="margin-top: 30px;">Reset</a>
+
                   </div>
 
                   </div>
                 </div>
               </form>
             </div>
+         
+
+
             @include('_message')
             
-          @if(!empty($subjects) && !empty($subjects->count())) <!-- Changed variable name from 'getSubject' to 'subjects' -->
+
+          @if(!empty($getSubject) && !empty($getSubject->count()))
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Marks Overview</h3> <!-- Changed the title -->
+                <h3 class="card-title">Marks Register</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body p-0" style="overflow: auto;">
@@ -70,18 +76,18 @@
                   <thead>
                     <tr>
                       <th>STUDENT NAME</th>
-                      @foreach($subjects as $subject) <!-- Changed variable name from 'getSubject' to 'subjects' -->
+                      @foreach($getSubject as $subject)
                       <th>
                         {{ $subject->subject_name }}  <br />
                         ({{ $subject->subject_type }} : {{ $subject->passing_mark }} / {{ $subject->full_marks }})
                       </th>
                       @endforeach
-                      <th>Actions</th> <!-- Changed "ACTION" to "Actions" -->
+                      <th>ACTION</th>                      
                     </tr>
                   </thead>
                   <tbody>
-                      @if(!empty($students) && !empty($students->count())) <!-- Changed variable name from 'getStudent' to 'students' -->
-                          @foreach($students as $student)
+                      @if(!empty($getStudent) && !empty($getStudent->count()))
+                          @foreach($getStudent as $student)
                           <form name="post" class="SubmitForm">
                               {{ csrf_field() }}
                               <input type="hidden" name="student_id" value="{{ $student->id }}">
@@ -97,7 +103,7 @@
                               $totalPassingMark = 0;
                               $pass_fail_vali = 0; 
                               @endphp
-                              @foreach($subjects as $subject) <!-- Changed variable name from 'getSubject' to 'subjects' -->
+                              @foreach($getSubject as $subject)
 
                                 @php
                                     $totalMark = 0;
@@ -118,7 +124,7 @@
                                 <td>
                                   <div style="margin-bottom: 10px;">
                                       Class Work
-                                       <!-- Changed 'name' and 'id' to include more descriptive values -->
+                                      
                                       <input type="hidden" name="mark[{{ $i }}][full_marks]" value="{{ $subject->full_marks }}">
                                       <input type="hidden" name="mark[{{ $i }}][passing_mark]" value="{{ $subject->passing_mark }}">
 
@@ -127,8 +133,8 @@
                                       <input type="text" name="mark[{{ $i }}][class_work]" id="class_work_{{ $student->id }}{{ $subject->subject_id }}" style="width:200px;" placeholder="Enter Marks" value="{{ !empty($getMark->class_work) ? $getMark->class_work : ''  }}" class="form-control">
                                   </div>
                                   <div style="margin-bottom: 10px;">
-                                      Homework
-                                      <input type="text" id="homework_{{ $student->id }}{{ $subject->subject_id }}" name="mark[{{ $i }}][home_work]" style="width:200px;" placeholder="Enter Marks" value="{{ !empty($getMark->home_work) ? $getMark->home_work : ''  }}" class="form-control">
+                                      Home Work
+                                      <input type="text" id="home_work_{{ $student->id }}{{ $subject->subject_id }}" name="mark[{{ $i }}][home_work]" style="width:200px;" placeholder="Enter Marks" value="{{ !empty($getMark->home_work) ? $getMark->home_work : ''  }}" class="form-control">
                                   </div>
 
                                   <div style="margin-bottom: 10px;">
@@ -137,7 +143,7 @@
                                   </div>
 
                                   <div style="margin-bottom: 10px;">
-                                      Exam Marks
+                                      Exam
                                       <input type="text" id="exam_{{ $student->id }}{{ $subject->subject_id }}" name="mark[{{ $i }}][exam]" style="width:200px;" placeholder="Enter Marks" class="form-control" value="{{ !empty($getMark->exam) ? $getMark->exam : ''  }}">
                                   </div>
 
@@ -147,12 +153,13 @@
 
                                   @if(!empty($getMark))
                                     <div style="margin-bottom: 10px;">
+
                                       @php
                                           $getLoopGrade = App\Models\MarksGradeModel::getGrade($totalMark);
                                       @endphp
 
-                                      <b>Total Marks :</b> {{ $totalMark }} <br />
-                                      <b>Passing Marks :</b> {{ $subject->passing_mark }} <br >
+                                      <b>Total Mark :</b> {{ $totalMark }} <br />
+                                      <b>Passing Mark :</b> {{ $subject->passing_mark }} <br >
                                       @if(!empty($getLoopGrade))
                                          <b>Grade :</b> {{ $getLoopGrade }} <br >
                                       @endif
@@ -181,11 +188,11 @@
                                 @if(!empty($totalStudentMark))
                                     <br >
                                     <br >
-                                    <b>Total Subject Marks :</b> {{ $totalFullMarks }} 
+                                    <b>Total Subject Mark :</b> {{ $totalFullMarks }} 
                                     <br >
-                                    <b>Total Passing Marks :</b> {{ $totalPassingMark }} 
+                                    <b>Total Passing Mark :</b> {{ $totalPassingMark }} 
                                     <br />
-                                    <b>Total Student Marks :</b> {{ $totalStudentMark }} 
+                                    <b>Total Student Mark :</b> {{ $totalStudentMark }} 
                                     <br />
                                     @php
                                       $percentage = ($totalStudentMark * 100) / $totalFullMarks;
@@ -231,7 +238,7 @@
 
 @endsection
 
-@section('script')
+@section('script').
 
 <script type="text/javascript">
   $('.SubmitForm').submit(function(e) {
@@ -256,7 +263,7 @@
     var id = $(this).attr('data-schedule');
     
     var class_work = $('#class_work_'+student_id+subject_id).val();
-    var home_work = $('#homework_'+student_id+subject_id).val(); <!-- Changed 'home_work' to 'homework' -->
+    var home_work = $('#home_work_'+student_id+subject_id).val();
     var test_work = $('#test_work_'+student_id+subject_id).val();
     var exam = $('#exam_'+student_id+subject_id).val();
 
