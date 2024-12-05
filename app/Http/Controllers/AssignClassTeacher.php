@@ -77,4 +77,25 @@ class AssignClassTeacher extends Controller
 
     }
 
+
+    public function edit($id)
+    {
+        $getRecord = AssignClassTeacherModel::getSingle($id);
+        if(!empty($getRecord))
+        {
+            $data['getRecord'] = $getRecord;
+            $data['getAssignTeacherID'] = AssignClassTeacherModel::getAssignTeacherID($getRecord->class_id);
+            $data['getClass'] = ClassModel::getClass();
+            $data['getTeacher'] = User::getTeacherClass();
+            $data['header_title'] = "Edit Assign Class Teacher";
+            return view('admin.assign_class_teacher.edit', $data);    
+        }
+        else
+        {
+            abort(404);
+        }
+        
+    }
+
+
 }

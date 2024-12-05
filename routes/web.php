@@ -38,13 +38,13 @@ use App\Http\Controllers\AssignClassTeacher;
 
 
 //Testing api:
-// *********************************************
+
 // Route::get('admin/assign_class_teacher/list',[AssignClassTeacher::class,'list']);
 // Route::get('admin/assign_class_teacher/add',[AssignClassTeacher::class,'add']);
 
-// ********************************************
 
 // Route Login, Logout
+Route::get('/',[AuthController::class,'login']);
 Route::post('login',[AuthController::class,'AuthLogin']);
 Route::get('logout',[AuthController::class,'logout']);
 //Route forgot password
@@ -137,7 +137,14 @@ Route::group(['middleware' => 'admin'], function(){
     Route::get('admin/assign_class_teacher/list',[AssignClassTeacher::class,'list']);
     Route::get('admin/assign_class_teacher/add',[AssignClassTeacher::class,'add']);
     Route::post('admin/assign_class_teacher/add',[AssignClassTeacher::class,'insert']);
-    
+    Route::get('admin/assign_class_teacher/edit/{id}', [AssignClassTeacher::class, 'edit']);
+    Route::post('admin/assign_class_teacher/edit/{id}', [AssignClassTeacher::class, 'update']);
+    Route::get('admin/assign_class_teacher/edit_single/{id}', [AssignClassTeacher::class, 'edit_single']);
+    Route::post('admin/assign_class_teacher/edit_single/{id}', [AssignClassTeacher::class, 'update_single']);
+    Route::get('admin/assign_class_teacher/delete/{id}', [AssignClassTeacher::class, 'delete']);
+
+
+
     //change password url:
     Route::get('admin/change_password',[UserController::class,'change_password']);
     Route::post('admin/change_password',[UserController::class,'update_change_password']);
