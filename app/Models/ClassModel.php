@@ -46,4 +46,5 @@ class ClassModel extends Model
                         -> get();
         return $return;
     }
+    
 }

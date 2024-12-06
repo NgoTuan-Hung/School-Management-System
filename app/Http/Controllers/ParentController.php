@@ -119,8 +119,8 @@ class ParentController extends Controller
             $file = $request->file('profile_pic');   
             $randomStr = date('Ymdhis').Str::random(20);
             $filename = strtolower($randomStr).'.'.$ext;
-            $file->move('upload/profile/', $filename);
-            
+            $file->move(base_path('upload/profile/'), $filename);
+
             $parent->profile_pic = $filename;            
         }
 
@@ -150,6 +150,37 @@ class ParentController extends Controller
         {
             abort(404);
         }
+    }
+
+    public function MyStudent($id)
+    {
+        $data['getParent'] = User::getSingle($id);
+        $data['parent_id'] = $id;
+        $data['getSearchStudent'] = User::getSearchStudent();
+        $data['getRecord'] = User::getMyStudent($id);
+        
+        $data['header_title'] = "Parent Student List";
+        return view('admin.parent.my_student',$data);
+    }
+
+
+    public function AssignStudentParent($student_id,$parent_id)
+    {
+        $student = User::getSingle($student_id);
+        $student->parent_id = $parent_id;
+        $student->save();
+
+        return redirect()->back()->with('success',"Student Succesfully Assign");
+    }
+
+    public function AssignStudentParentDelete($student_id)
+    { 
+        $student = User::getSingle($student_id);
+        $student->parent_id = null;
+        $student->save();
+
+        return redirect()->back()->with('success', "Student Successfully Assign Deleted");
+
     }
 
     public function myStudentParent()

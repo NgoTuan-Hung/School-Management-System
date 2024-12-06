@@ -20,7 +20,6 @@ class StudentAddFeesModel extends Model
                     ->where('student_add_fees.is_payment', '=', 1)
                     ->get();
     }
-
     static public function getPaidAmount($student_id, $class_id)
     {
          return self::where('student_add_fees.class_id', '=', $class_id)
@@ -28,4 +27,14 @@ class StudentAddFeesModel extends Model
                     ->where('student_add_fees.is_payment', '=', 1)                    
                     ->sum('student_add_fees.paid_amount');
     }
+
+
+
+    static public function TotalPaidAmountStudent($student_id)
+    {
+        return self::where('student_add_fees.is_payment', '=', 1)                    
+                    ->where('student_add_fees.student_id', '=', $student_id)
+                    ->sum('student_add_fees.paid_amount');
+    }
+    
 }
