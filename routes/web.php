@@ -135,6 +135,7 @@ Route::group(['middleware' => 'student'], function(){
 });
 
 Route::group(['middleware' => 'parent'], function(){
+    Route::get('parent/my_student_notice_board', [CommunicateController::class, 'MyStudentNoticeBoardParent']); 
     Route::get('parent/dashboard',[DashboardController::class,'dashboard']);
 
     Route::get('parent/change_password',[UserController::class,'change_password']);
