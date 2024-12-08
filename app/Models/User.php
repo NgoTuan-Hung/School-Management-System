@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 
 
 
@@ -46,7 +47,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    static public function getAdmin()
+    static public function getAdmin($remove_pagination = 0)
     {
         $return = self::select('users.*')
                                 -> where('user_type','=',1) 
@@ -54,28 +55,122 @@ class User extends Authenticatable
         if (!empty(request()->get('email'))) {
             $return = $return->where('email', 'like', '%' . request()->get('email') . '%');
         }
-
         if (!empty(request()->get('name'))) {
-            $return = $return->where('name', 'like', '%' . request()->get('name') . '%');
+            $name = request()->get('name');
+            
+            // Loại bỏ khoảng trắng 
+            $nameWithoutSpaces = str_replace(' ', '', $name);
+            
+            $return = $return->where(function ($query) use ($nameWithoutSpaces) {
+                $query->whereRaw("REPLACE(users.name, ' ', '') LIKE ?", ['%' . $nameWithoutSpaces . '%']);
+            });
         }
+        
 
         if (!empty(request()->get('date'))) {
             $return = $return->whereDate('created_at' ,'=' ,request()->get('date'));
-        }
+        } if(!empty(request()->get('email')))
+                        {
+                            $return = $return->where('users.email','like','%'.request()->get('email'));
+                        }
                                 
         $return = $return -> orderBy('id','asc')
                         -> paginate(10);
         return $return;
     }
 
+    static public function getTeacher()
+    {   
+        $return = self::select('users.*')
+                        ->where('users.user_type','=',2)
+                        ->where('users.is_delete','=',0);
+                        if(!empty(request()->get('name')))
+                        {
+                            $name = request()->get('name');
+                            // Kiểm tra tên bắt đầu với ký tự nhập vào
+                            $return = $return->where('users.name', 'like', $name.'%');
+                        }
+
+
+                        if(!empty(request()->get('last_name')))
+                        {
+                            $return = $return->where('users.last_name','like', '%'.request()->get('last_name').'%');
+                        }
+
+                        if(!empty(request()->get('email')))
+                        {
+                            $return = $return->where('users.email','like', '%'.request()->get('email').'%');
+                        }
+
+                        if(!empty(request()->get('gender')))
+                        {
+                            $return = $return->where('users.gender','=', request()->get('gender'));
+                        }
+
+                        if(!empty(request()->get('mobile_number')))
+                        {
+                            $return = $return->where('users.mobile_number','like', '%'.request()->get('mobile_number').'%');
+                        }
+
+                        if(!empty(request()->get('marital_status')))
+                        {
+                            $return = $return->where('users.marital_status','like', '%'.request()->get('marital_status').'%');
+                        }
+
+                        if(!empty(request()->get('address')))
+                        {
+                            $return = $return->where('users.address','like', '%'.request()->get('address').'%');
+                        }
+
+                        
+
+                        if(!empty(request()->get('admission_date')))
+                        {
+                            $return = $return->whereDate('users.admission_date','=', request()->get('admission_date'));
+                        }
+
+                        if(!empty(request()->get('date')))
+                        {
+                            $return = $return->whereDate('users.created_at','=', request()->get('date'));
+                        }
+
+                        if(!empty(request()->get('status')))
+                        {
+                            $status = (request()->get('status') == 100) ? 0 : 1;
+                            $return = $return->where('users.status','=', $status);
+                        }
+
+
+                       
+        $return = $return -> orderBy('id','desc')
+        -> paginate(10);
+        return $return;
+    }
+    
+
+    static public function getTeacherClass()
+    {   
+        $return = self::select('users.*')
+                        ->where('users.user_type','=',2)
+                        ->where('users.is_delete','=',0);
+            
+        $return = $return -> orderBy('users.id','desc')
+        -> get();
+        return $return;
+    }
+
     static public function getStudent($remove_pagination = 0)
     {
-        $return = self::select('users.*')
+        $return = self::select('users.*','class.name as class_name','parent.name as parent_name')
+                        ->join('users as parent','parent.id','=','users.parent_id','left')
+                        ->join('class','class.id','=','users.class_id','left')
                         -> where('users.user_type','=',3)
                         -> where('users.is_delete','=',0);
                         if(!empty(request()->get('name')))
                         {
-                            $return = $return->where('users.name','like', '%'.request()->get('name').'%');
+                            $name = request()->get('name');
+                            // Kiểm tra tên bắt đầu với ký tự nhập vào
+                            $return = $return->where('users.name', 'like', $name.'%');
                         }
                         if(!empty(request()->get('last_name')))
                         {
@@ -160,6 +255,7 @@ class User extends Authenticatable
     }
 
 
+    //parent
     static public function getMyStudent($parent_id)
     {
         $return = self::select('users.*', 'class.name as class_name','parent.name as parent_name')
@@ -187,6 +283,13 @@ class User extends Authenticatable
     }
     
 
+    static public function getSingleClass($id)
+    {
+        return self::select('users.*','class.amount', 'class.name as class_name')
+                    ->join('class','class.id','users.class_id')
+                    ->where('users.id','=',$id)
+                    ->first();
+    }
     static public function getParent($remove_pagination=0)
     {
         $return = self::select('users.*')
@@ -253,6 +356,46 @@ class User extends Authenticatable
                         
 
         return $return;
+    }
+
+
+    static public function getSearchStudent()
+    {
+        if(!empty(request()->get('id')) || !empty(request()->get('name')) || !empty(request()->get('last_name')) || !empty(request()->get('email')))
+        {
+                $return = self::select('users.*', 'class.name as class_name','parent.name as parent_name')
+                            ->join('users as parent','parent.id', '=', 'users.parent_id', 'left')
+                            ->join('class', 'class.id', '=', 'users.class_id', 'left')
+                            ->where('users.user_type','=',3)
+                            ->where('users.is_delete','=',0);
+
+                            if(!empty(request()->get('id')))
+                            {
+                                $return = $return->where('users.id','=', request()->get('id'));
+                            }
+
+                            if(!empty(request()->get('name')))
+                            {
+                                $return = $return->where('users.name','like', '%'.request()->get('name').'%');
+                            }
+                            if(!empty(request()->get('last_name')))
+                            {
+                                $return = $return->where('users.last_name','like', '%'.request()->get('last_name').'%');
+                            }
+
+                            if(!empty(request()->get('email')))
+                            {
+                                $return = $return->where('users.email','like', '%'.request()->get('email').'%');
+                            }
+
+
+
+            $return = $return->orderBy('users.id', 'desc')
+                            ->limit(50)
+                            ->get();
+
+            return $return;
+        }
     }
 
     static public function getEmailSingle($email)
