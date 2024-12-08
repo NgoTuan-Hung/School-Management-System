@@ -18,7 +18,6 @@ class StudentAttendanceModel extends Model
         return StudentAttendanceModel::select('student_attendance.*', 'class.name as class_name')
                     ->join('class', 'class.id', '=', 'student_attendance.class_id')
                     ->where('student_attendance.student_id', '=', $student_id)
-                    ->groupBy('student_attendance.class_id')
                     ->get();
     }
 
