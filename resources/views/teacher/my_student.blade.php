@@ -12,7 +12,13 @@
         </div>
       </div>
     </section>
+	<section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
 
+    @include('_message')
+	
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Student Records</h3>
@@ -74,6 +80,10 @@
                             N/A
                           @endif
                         </td>
+						<td>{{ $record->blood_group }}</td>
+                        <td>{{ $record->height }}</td>
+                        <td>{{ $record->weight }}</td>
+                        <td>{{ date('d-m-Y H:i A', strtotime($record->created_at)) }}</td>
                       </tr>
                     @endforeach
                   </tbody>
