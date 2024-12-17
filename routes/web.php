@@ -16,6 +16,7 @@ use App\Http\Controllers\FeesCollectionController;
 use App\Http\Controllers\CommunicateController;
 use App\Http\Controllers\AssignClassTeacher;
 use App\Http\Controllers\ClassTimetableController;
+use App\Http\Controllers\ExaminationsController;
 
 
 
@@ -148,14 +149,23 @@ Route::group(['middleware' => 'admin'], function(){
     Route::get('admin/assign_class_teacher/delete/{id}', [AssignClassTeacher::class, 'delete']);
 
 
+    Route::get('admin/examinations/exam/list', [ExaminationsController::class, 'exam_list']);  
+    Route::get('admin/examinations/exam/add', [ExaminationsController::class, 'exam_add']);  
+    Route::post('admin/examinations/exam/add', [ExaminationsController::class, 'exam_insert']);  
+
+
+
     Route::get('admin/class_timetable/list', [ClassTimetableController::class, 'list']);
     Route::post('admin/class_timetable/get_subject', [ClassTimetableController::class, 'get_subject']);
     Route::post('admin/class_timetable/add', [ClassTimetableController::class, 'insert_update']);
 
+    Route::get('admin/examinations/exam/edit/{id}', [ExaminationsController::class, 'exam_edit']);  
+    Route::post('admin/examinations/exam/edit/{id}', [ExaminationsController::class, 'exam_update']);
+    Route::get('admin/examinations/exam/delete/{id}', [ExaminationsController::class, 'exam_delete']); 
 
-
-
-
+    // Scheduling
+    Route::get('admin/examinations/exam_schedule', [ExaminationsController::class, 'exam_schedule']); 
+    Route::post('admin/examinations/exam_schedule_insert', [ExaminationsController::class, 'exam_schedule_insert']); 
 
     //change password url:
     Route::get('admin/change_password',[UserController::class,'change_password']);
