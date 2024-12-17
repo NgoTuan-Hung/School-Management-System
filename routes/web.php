@@ -15,6 +15,9 @@ use App\Http\Controllers\ParentController;
 use App\Http\Controllers\FeesCollectionController;
 use App\Http\Controllers\CommunicateController;
 use App\Http\Controllers\AssignClassTeacher;
+use App\Http\Controllers\ClassTimetableController;
+
+
 
 
 
@@ -143,6 +146,14 @@ Route::group(['middleware' => 'admin'], function(){
     Route::get('admin/assign_class_teacher/edit_single/{id}', [AssignClassTeacher::class, 'edit_single']);
     Route::post('admin/assign_class_teacher/edit_single/{id}', [AssignClassTeacher::class, 'update_single']);
     Route::get('admin/assign_class_teacher/delete/{id}', [AssignClassTeacher::class, 'delete']);
+
+
+    Route::get('admin/class_timetable/list', [ClassTimetableController::class, 'list']);
+    Route::post('admin/class_timetable/get_subject', [ClassTimetableController::class, 'get_subject']);
+    Route::post('admin/class_timetable/add', [ClassTimetableController::class, 'insert_update']);
+
+
+
 
 
 
