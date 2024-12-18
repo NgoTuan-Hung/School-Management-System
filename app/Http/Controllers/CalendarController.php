@@ -89,29 +89,4 @@ class CalendarController extends Controller
         
     }
 
-    // parent side
-
-    public function MyCalendarParent($student_id)
-    {
-        $getStudent = User::getSingle($student_id);
-
-        $data['getMyTimetable'] = $this->getTimetable($getStudent->class_id);
-        $data['getExamTimetable'] = $this->getExamTimetable($getStudent->class_id);
-
-        $data['getStudent'] = $getStudent;
-        $data['header_title'] = "Student Calendar";
-        return view('parent.my_calendar', $data);
-    }
-
-    // teacher side
-
-    public function MyCalendarTeacher()
-    {
-        $teacher_id = Auth::user()->id;
-        $data['getClassTimetable'] = AssignClassTeacherModel::getCalendarTeacher($teacher_id);
-        $data['getExamTimetable'] = ExamScheduleModel::getExamTimetableTeacher($teacher_id);
-        $data['header_title'] = "My Calendar";
-        return view('teacher.my_calendar', $data);
-    }
-
 }
