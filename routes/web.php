@@ -15,6 +15,8 @@ use App\Http\Controllers\ParentController;
 use App\Http\Controllers\FeesCollectionController;
 use App\Http\Controllers\ClassTimetableController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\ExaminationsController;
+
 
 
 use App\Http\Controllers\CommunicateController;
@@ -212,6 +214,8 @@ Route::group(['middleware' => 'student'], function(){
     Route::get('student/my_timetable', [ClassTimetableController::class, 'MyTimetable']);
 
     Route::get('student/my_calendar', [CalendarController::class, 'MyCalendar']);
+    Route::get('student/my_exam_timetable', [ExaminationsController::class, 'MyExamTimetable']);
+
 
 
 
@@ -221,6 +225,9 @@ Route::group(['middleware' => 'student'], function(){
     //
     Route::get('student/change_password',[UserController::class,'change_password']);
     Route::post('student/change_password',[UserController::class,'update_change_password']);
+
+    Route::get('student/my_exam_result', [ExaminationsController::class, 'myExamResult']); 
+    Route::get('student/my_exam_result/print', [ExaminationsController::class, 'myExamResultPrint']);
     
 });
 
