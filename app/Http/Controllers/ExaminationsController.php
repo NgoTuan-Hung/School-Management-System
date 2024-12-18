@@ -359,4 +359,40 @@ class ExaminationsController extends Controller
         return redirect('admin/examinations/marks_grade')->with('success', "Marks Grade successfully deleted");   
     }
 
+    // student side
+    
+    public function MyExamTimetable(Request $request)
+    {
+        $class_id = Auth::user()->class_id;
+        $getExam = ExamScheduleModel::getExam($class_id);
+        $result = array();
+        foreach($getExam as $value)
+        {
+            $dataE = array();
+            $dataE['name'] = $value->exam_name;
+            $getExamTimetable = ExamScheduleModel::getExamTimetable($value->exam_id, $class_id);
+            $resultS = array();
+            foreach($getExamTimetable as $valueS)
+            {
+                $dataS = array();
+                $dataS['subject_name'] = $valueS->subject_name;
+                $dataS['exam_date'] = $valueS->exam_date;
+                $dataS['start_time'] = $valueS->start_time;
+                $dataS['end_time'] = $valueS->end_time;
+                $dataS['room_number'] = $valueS->room_number;
+                $dataS['full_marks'] = $valueS->full_marks;
+                $dataS['passing_mark'] = $valueS->passing_mark;
+                $resultS[] = $dataS;
+            }
+
+            $dataE['exam'] = $resultS;
+            $result[] = $dataE;
+        }
+
+        $data['getRecord'] = $result;
+
+        $data['header_title'] = "My Exam Timetable";
+        return view('student.my_exam_timetable',$data);   
+    }
+
 }
