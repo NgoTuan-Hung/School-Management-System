@@ -19,11 +19,12 @@ class MarksRegisterModel extends Model
 
     static public function getExam($student_id)
     {
-        return MarksRegisterModel::select('marks_register.*', 'exam.name as exam_name')
-                ->join('exam','exam.id','=', 'marks_register.exam_id')
-                ->where('marks_register.student_id', '=', $student_id)
-                ->groupBy('marks_register.exam_id')
-                ->get();
+        return MarksRegisterModel::select('marks_register.exam_id', 'marks_register.student_id', 'exam.name as exam_name')
+                                ->join('exam', 'exam.id', '=', 'marks_register.exam_id')
+                                ->where('marks_register.student_id', '=', $student_id)
+                                ->groupBy('marks_register.exam_id', 'exam.name', 'marks_register.student_id')
+                                ->get();
+
     }
 
 
