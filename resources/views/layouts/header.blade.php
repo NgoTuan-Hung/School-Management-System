@@ -389,7 +389,7 @@
         <a href="{{ url('parent/my_student') }}" class="nav-link @if(Request::segment(2) == 'my_student') active @endif">
           <i class="nav-icon far fa-user"></i>
           <p>
-            My Student1
+            My Student
           </p>
         </a>
       </li>
