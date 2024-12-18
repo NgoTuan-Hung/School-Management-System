@@ -294,6 +294,9 @@
           </p>
         </a>
       </li>
+
+
+      {{-- Student part --}}
       @elseif (Auth::user() -> user_type == 3)
         <li class="nav-item">
           <a href="{{url('student/dashboard') }}" class="nav-link @if(Request::segment(2)=='dashboard') active @endif">
@@ -304,37 +307,45 @@
           </a>
         </li>
 
-        <li c<li class="nav-item">
-        <a href="{{url('admin/class/list') }}" class="nav-link @if(Request::segment(2)=='class') active @endif">
-          <i class="nav-icon far fa-user"></i>
-          <p>
-            Class
-          </p>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="{{url('admin/subject/list') }}" class="nav-link @if(Request::segment(2)=='subject') active @endif">
-          <i class="nav-icon far fa-user"></i>
-          <p>
-            Subject
-          </p>
-        </a>
-      </li>
+        <li class="nav-item">
+          <a href="{{ url('student/my_subject') }}" class="nav-link @if(Request::segment(2) == 'my_subject') active @endif">
+            <i class="nav-icon far fa-user"></i>
+            <p>
+              My Subject
+            </p>
+          </a>
+        </li>
 
-      <li class="nav-item">
-        <a href="{{url('admin/assign_subject/list') }}" class="nav-link @if(Request::segment(2)=='assign_subject') active @endif">
-          <i class="nav-icon far fa-user"></i>
-          <p>
-            Assign Subject
-          </p>
-        </a>lass="nav-item">
-          <a href="{{url('student/change_password') }}" class="nav-link @if(Request::segment(2)=='change_password') active @endif">
+
+         <li class="nav-item">
+          <a href="{{ url('student/my_timetable') }}" class="nav-link @if(Request::segment(2) == 'my_timetable') active @endif">
+            <i class="nav-icon far fa-user"></i>
+            <p>
+              My Timetable
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{{ url('student/account') }}" class="nav-link @if(Request::segment(2) == 'account') active @endif">
+            <i class="nav-icon far fa-user"></i>
+            <p>
+              My Account
+            </p>
+          </a>
+        </li>
+       
+
+          <li class="nav-item">
+          <a href="{{ url('student/change_password') }}" class="nav-link @if(Request::segment(2) == 'change_password') active @endif">
             <i class="nav-icon far fa-user"></i>
             <p>
               Change Password
             </p>
           </a>
         </li>
+
+      {{--Parent Part  --}}
       @elseif (Auth::user() -> user_type ==4)  
       <li class="nav-item">
         <a href="{{url('parent/dashboard') }}" class="nav-link @if(Request::segment(2)=='dashboard') active @endif">
@@ -345,34 +356,7 @@
         </a>
       </li>
 
-      <li class="nav-item">
-        <a href="{{ url('parent/my_student') }}" class="nav-link @if(Request::segment(2) == 'my_student') active @endif">
-          <i class="nav-icon far fa-user"></i>
-          <p>
-            My Student
-          </p>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a href="{{ url('parent/my_student_notice_board') }}" class="nav-link @if(Request::segment(2) == 'my_student_notice_board') active @endif">
-          <i class="nav-icon far fa-user"></i>
-          <p>
-            My Student Notice Board
-          </p>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a href="{{ url('parent/my_notice_board') }}" class="nav-link @if(Request::segment(2) == 'my_notice_board') active @endif">
-          <i class="nav-icon far fa-user"></i>
-          <p>
-            My Notice Board
-          </p>
-        </a>
-      </li>
-
-
+      
       <li class="nav-item">
         <a href="{{url('parent/change_password') }}" class="nav-link @if(Request::segment(2)=='change_password') active @endif">
           <i class="nav-icon far fa-user"></i>
