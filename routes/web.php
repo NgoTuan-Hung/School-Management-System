@@ -12,6 +12,9 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ParentController;
 use App\Http\Controllers\FeesCollectionController;
+use App\Http\Controllers\ClassTimetableController;
+
+
 
 
 
@@ -133,6 +136,12 @@ Route::group(['middleware' => 'student'], function(){
 
     Route::get('student/account', [UserController::class, 'MyAccount']);
     Route::post('student/account', [UserController::class, 'UpdateMyAccountStudent']);
+
+
+    // Time table:
+    Route::get('student/my_subject', [SubjectController::class, 'MySubject']);
+    Route::get('student/my_timetable', [ClassTimetableController::class, 'MyTimetable']);
+
 
     //FeesCollectionController
     Route::get('student/fees_collection', [FeesCollectionController::class, 'CollectFeesStudent']);
