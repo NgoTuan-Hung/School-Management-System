@@ -34,11 +34,11 @@ class ExamScheduleModel extends Model
     static public function getExam($class_id)
     {
         return ExamScheduleModel::select('exam_schedule.exam_id', 'exam.name as exam_name')
-    ->join('exam', 'exam.id', '=', 'exam_schedule.exam_id')
-    ->where('exam_schedule.class_id', '=', $class_id)
-    ->groupBy('exam_schedule.exam_id', 'exam.name') // Bao gồm các cột cần thiết trong GROUP BY
-    ->orderBy('exam_schedule.exam_id', 'desc') // Sắp xếp theo exam_id
-    ->get();
+                        ->join('exam', 'exam.id', '=', 'exam_schedule.exam_id')
+                        ->where('exam_schedule.class_id', '=', $class_id)
+                        ->groupBy('exam_schedule.exam_id', 'exam.name') // Bao gồm các cột cần thiết trong GROUP BY
+                        ->orderBy('exam_schedule.exam_id', 'desc') // Sắp xếp theo exam_id
+                        ->get();
 
     }
 
