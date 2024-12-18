@@ -126,8 +126,14 @@ Route::group(['middleware' => 'teacher'], function(){
     Route::post('teacher/change_password',[UserController::class,'update_change_password']);
 });
 
+
+// Student api"
 Route::group(['middleware' => 'student'], function(){
     Route::get('student/dashboard',[DashboardController::class,'dashboard']);
+
+    Route::get('student/account', [UserController::class, 'MyAccount']);
+    Route::post('student/account', [UserController::class, 'UpdateMyAccountStudent']);
+
     //FeesCollectionController
     Route::get('student/fees_collection', [FeesCollectionController::class, 'CollectFeesStudent']);
     Route::post('student/fees_collection', [FeesCollectionController::class, 'CollectFeesStudentPayment']);
