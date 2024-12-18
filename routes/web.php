@@ -18,8 +18,6 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\CommunicateController;
 use App\Http\Controllers\AssignClassTeacher;
 use App\Http\Controllers\ExaminationsController;
-use App\Http\Controllers\HomeworkController;
-
 
 
 
@@ -45,12 +43,6 @@ use App\Http\Controllers\HomeworkController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-
-
-//Testing api:
-
-// Route::get('admin/assign_class_teacher/list',[AssignClassTeacher::class,'list']);
-// Route::get('admin/assign_class_teacher/add',[AssignClassTeacher::class,'add']);
 
 
 // Route Login, Logout
@@ -231,10 +223,8 @@ Route::group(['middleware' => 'student'], function(){
     
 });
 
+// Parent api:
 Route::group(['middleware' => 'parent'], function(){
-    Route::get('parent/my_student/homewrok/{id}', [HomeworkController::class, 'HomeworkStudentParent']);
-    Route::get('parent/my_student/submitted_homewrok/{id}', [HomeworkController::class, 'SubmittedHomeworkStudentParent']);
-
     Route::get('parent/my_student/subject/class_timetable/{class_id}/{subject_id}/{student_id}', [ClassTimetableController::class, 'MyTimetableParent']);
 
     Route::get('parent/my_student_notice_board', [CommunicateController::class, 'MyStudentNoticeBoardParent']); 
@@ -243,8 +233,18 @@ Route::group(['middleware' => 'parent'], function(){
     Route::get('parent/change_password',[UserController::class,'change_password']);
     Route::post('parent/change_password',[UserController::class,'update_change_password']);
 
+    Route::get('parent/my_student/subject/{student_id}', [SubjectController::class, 'ParentStudentSubject']);
+    Route::get('parent/my_student/exam_timetable/{student_id}', [ExaminationsController::class, 'ParentMyExamTimetable']);
+    Route::get('parent/my_student/exam_result/{student_id}', [ExaminationsController::class, 'ParentMyExamResult']);
+
+    Route::get('parent/my_exam_result/print', [ExaminationsController::class, 'myExamResultPrint']);
+    Route::get('parent/my_student/calendar/{student_id}', [CalendarController::class, 'MyCalendarParent']);
+
+
+
     Route::get('parent/my_notice_board', [CommunicateController::class, 'MyNoticeBoardParent']);
     Route::get('parent/my_student', [ParentController::class, 'myStudentParent']);
 
     Route::get('parent/my_student/attendance/{student_id}', [AttendanceController::class, 'MyAttendanceParent']);
+
 });
