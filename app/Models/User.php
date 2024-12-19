@@ -436,4 +436,15 @@ class User extends Authenticatable
         }
     }
 
+
+    static public function getStudentClass($class_id)
+    {
+        return self::select('users.id', 'users.name', 'users.last_name')
+                        ->where('users.user_type','=',3)
+                        ->where('users.is_delete','=',0)
+                        ->where('users.class_id','=',$class_id)
+                        ->orderBy('users.id', 'desc')
+                        ->get();        
+    }
+
 }

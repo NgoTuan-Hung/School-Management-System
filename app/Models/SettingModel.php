@@ -15,4 +15,16 @@ class SettingModel extends Model
     {
         return self::find(1);
     }
+
+    public function getLogo()
+    {
+        if(!empty($this->logo) && file_exists('upload/setting/'.$this->logo))
+        {
+            return url('upload/setting/'.$this->logo);
+        }
+        else
+        {
+            return '';
+        }
+    }
 }
