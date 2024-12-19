@@ -281,7 +281,37 @@ class User extends Authenticatable
                         ->count();
         return $return;
     }
+
+
+    static public function getStudentClass($class_id)
+    {
+        return self::select('users.id', 'users.name', 'users.last_name')
+                        ->where('users.user_type','=',3)
+                        ->where('users.is_delete','=',0)
+                        ->where('users.class_id','=',$class_id)
+                        ->orderBy('users.id', 'desc')
+                        ->get();        
+    }
     
+    static public function getTeacherStudent($teacher_id)
+{
+    // Xây dựng truy vấn mà không cần GROUP BY
+    $return = self::select('users.*', 'class.name as class_name')
+                    ->join('class', 'class.id', '=', 'users.class_id')
+                    ->join('assign_class_teacher', 'assign_class_teacher.class_id', '=', 'class.id')
+                    ->where('assign_class_teacher.teacher_id', '=', $teacher_id)   
+                    ->where('assign_class_teacher.status', '=', 0)                     
+                    ->where('assign_class_teacher.is_delete', '=', 0)                     
+                    ->where('users.user_type', '=', 3)
+                    ->where('users.is_delete', '=', 0)
+                    ->orderBy('users.id', 'desc');
+
+    // Phân trang mà không cần GROUP BY
+    $return = $return->paginate(20);
+
+    return $return;
+}
+
 
     static public function getSingleClass($id)
     {

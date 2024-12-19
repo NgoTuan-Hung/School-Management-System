@@ -11,6 +11,16 @@ use Illuminate\Support\Facades\Auth;
 use Mail;
 class CommunicateController extends Controller
 {
+
+    // teacher side work   
+    public function MyNoticeBoardTeacher()
+    {
+        $data['getRecord'] = NoticeBoardModel::getRecordUser(Auth::user()->user_type);
+        $data['header_title'] = 'My Notice Board';
+        return view('teacher.my_notice_board', $data);
+    }
+
+    // parent side work 
     public function MyNoticeBoardParent()
     {
         $data['getRecord'] = NoticeBoardModel::getRecordUser(Auth::user()->user_type);
