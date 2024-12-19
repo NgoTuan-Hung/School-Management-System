@@ -256,6 +256,25 @@
         </ul>
       </li>
 
+      <li class="nav-item  @if(Request::segment(2) == 'communicate') menu-is-opening menu-open @endif">
+        <a href="#" class="nav-link  @if(Request::segment(2) == 'communicate') active @endif">
+          <i class="nav-icon fas fa-table"></i>
+          <p>
+            Communicate
+            <i class="fas fa-angle-left right"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+
+          <li class="nav-item">
+            <a href="{{ url('admin/communicate/notice_board') }}" class="nav-link @if(Request::segment(3) == 'notice_board') active @endif">
+              <i class="far fa-circle nav-icon"></i>
+              <p>Notice Board</p>
+            </a>
+          </li>
+        </ul>
+    </li>
+
 
 
       <li class="nav-item">
@@ -473,6 +492,46 @@
             <i class="nav-icon far fa-user"></i>
             <p>
               My Exam Result
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item  @if(Request::segment(2) == 'homework') menu-is-opening menu-open @endif">
+          <a href="#" class="nav-link  @if(Request::segment(2) == 'homework') active @endif">
+            <i class="nav-icon fas fa-table"></i>
+            <p>
+              Homework
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+
+            <li class="nav-item">
+              <a href="{{ url('student/my_homework') }}" class="nav-link @if(Request::segment(2) == 'my_homework') active @endif">
+                <i class="nav-icon far fa-user"></i>
+                <p>
+                  My Homework
+                </p>
+              </a>
+            </li>
+
+
+            <li class="nav-item">
+              <a href="{{ url('student/my_submitted_homework') }}" class="nav-link @if(Request::segment(2) == 'my_submitted_homework') active @endif">
+                <i class="nav-icon far fa-user"></i>
+                <p>
+                  Submitted Homework
+                </p>
+              </a>
+            </li>
+          </ul>
+      </li>
+
+        <li class="nav-item">
+          <a href="{{ url('student/my_notice_board') }}" class="nav-link @if(Request::segment(2) == 'my_notice_board') active @endif">
+            <i class="nav-icon far fa-user"></i>
+            <p>
+              My Notice Board
             </p>
           </a>
         </li>

@@ -22,7 +22,6 @@ class MarksRegisterModel extends Model
         return MarksRegisterModel::select('marks_register.*', 'exam.name as exam_name')
                 ->join('exam','exam.id','=', 'marks_register.exam_id')
                 ->where('marks_register.student_id', '=', $student_id)
-                ->groupBy('marks_register.exam_id')
                 ->get();
     }
 
@@ -47,9 +46,5 @@ class MarksRegisterModel extends Model
                 ->where('marks_register.student_id', '=', $student_id)            
                 ->first();
     }
-
-    
-
-    
 
 }

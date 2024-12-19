@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Request;
 
 class ClassModel extends Model
@@ -62,7 +64,32 @@ class ClassModel extends Model
         return $return;
     }
     
+    public function getProfile()
+{
+    // Đường dẫn đầy đủ tới thư mục upload/class
+    $filePath = public_path('upload/class/' . $this->profile_pic);
 
+    // Kiểm tra nếu profile_pic không rỗng và file tồn tại
+    if (!empty($this->profile_pic) && file_exists($filePath)) {
+        // Trả về URL đầy đủ của ảnh
+        return asset('upload/class/' . $this->profile_pic);
+    }
+
+    // Trả về ảnh mặc định nếu không có ảnh
+    return asset('images/default-profile.png');
+}
+
+
+    public function getClassProfileDirect(){
+        if(!empty($this->profile_pic) && file_exists('upload/class/'.$this->profile_pic))
+        {
+            return url('upload/class/'.$this->profile_pic);
+        }
+        else
+        {
+            return url('upload/class/user.jpg');
+        }
+    }
 
 
 }

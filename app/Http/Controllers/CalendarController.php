@@ -9,7 +9,7 @@ use App\Models\ClassSubjectTimetableModel;
 use App\Models\ExamScheduleModel;
 use App\Models\AssignClassTeacherModel;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\User;
+use App\Models\User;
 
 
 
