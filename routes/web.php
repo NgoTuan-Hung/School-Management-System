@@ -14,9 +14,12 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ParentController;
 use App\Http\Controllers\FeesCollectionController;
 use App\Http\Controllers\CommunicateController;
-use App\Http\Controllers\AssignClassTeacher;
+use App\Http\Controllers\AssignClassTeacherController;
 use App\Http\Controllers\ClassTimetableController;
 use App\Http\Controllers\ExaminationsController;
+use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\HomeworkController;
+
 
 
 
@@ -139,14 +142,14 @@ Route::group(['middleware' => 'admin'], function(){
     Route::post('admin/assign_subject/edit_single/{id}',[ClassSubjectController::class,'update_single']);
     
     //assgin_class_teacher:
-    Route::get('admin/assign_class_teacher/list',[AssignClassTeacher::class,'list']);
-    Route::get('admin/assign_class_teacher/add',[AssignClassTeacher::class,'add']);
-    Route::post('admin/assign_class_teacher/add',[AssignClassTeacher::class,'insert']);
-    Route::get('admin/assign_class_teacher/edit/{id}', [AssignClassTeacher::class, 'edit']);
-    Route::post('admin/assign_class_teacher/edit/{id}', [AssignClassTeacher::class, 'update']);
-    Route::get('admin/assign_class_teacher/edit_single/{id}', [AssignClassTeacher::class, 'edit_single']);
-    Route::post('admin/assign_class_teacher/edit_single/{id}', [AssignClassTeacher::class, 'update_single']);
-    Route::get('admin/assign_class_teacher/delete/{id}', [AssignClassTeacher::class, 'delete']);
+    Route::get('admin/assign_class_teacher/list',[AssignClassTeacherController::class,'list']);
+    Route::get('admin/assign_class_teacher/add',[AssignClassTeacherController::class,'add']);
+    Route::post('admin/assign_class_teacher/add',[AssignClassTeacherController::class,'insert']);
+    Route::get('admin/assign_class_teacher/edit/{id}', [AssignClassTeacherController::class, 'edit']);
+    Route::post('admin/assign_class_teacher/edit/{id}', [AssignClassTeacherController::class, 'update']);
+    Route::get('admin/assign_class_teacher/edit_single/{id}', [AssignClassTeacherController::class, 'edit_single']);
+    Route::post('admin/assign_class_teacher/edit_single/{id}', [AssignClassTeacherController::class, 'update_single']);
+    Route::get('admin/assign_class_teacher/delete/{id}', [AssignClassTeacherController::class, 'delete']);
 
 
     Route::get('admin/examinations/exam/list', [ExaminationsController::class, 'exam_list']);  
@@ -173,11 +176,58 @@ Route::group(['middleware' => 'admin'], function(){
 
 });
 
-Route::group(['middleware' => 'teacher'], function(){
-    Route::get('teacher/dashboard',[DashboardController::class,'dashboard']);
+Route::group(['middleware' => 'teacher'], function () {
 
-    Route::get('teacher/change_password',[UserController::class,'change_password']);
-    Route::post('teacher/change_password',[UserController::class,'update_change_password']);
+    Route::get('teacher/dashboard', [DashboardController::class, 'dashboard']);
+
+    Route::get('teacher/change_password', [UserController::class, 'change_password']);
+    Route::post('teacher/change_password', [UserController::class, 'update_change_password']);
+
+    Route::get('teacher/account', [UserController::class, 'MyAccount']);
+    Route::post('teacher/account', [UserController::class, 'UpdateMyAccount']);
+
+
+
+    Route::get('teacher/my_student', [StudentController::class, 'MyStudent']);
+
+
+    
+
+
+    Route::get('teacher/my_class_subject', [AssignClassTeacherController::class, 'MyClassSubject']);
+    Route::get('teacher/my_class_subject/class_timetable/{class_id}/{subject_id}', [ClassTimetableController::class, 'MyTimetableTeacher']);
+    
+
+    
+    Route::get('teacher/my_exam_timetable', [ExaminationsController::class, 'MyExamTimetableTeacher']);
+    Route::get('teacher/my_exam_result/print', [ExaminationsController::class, 'myExamResultPrint']);
+
+    Route::get('teacher/my_calendar', [CalendarController::class, 'MyCalendarTeacher']);
+
+
+    Route::get('teacher/marks_register', [ExaminationsController::class, 'marks_register_teacher']); 
+    Route::post('teacher/submit_marks_register', [ExaminationsController::class, 'submit_marks_register']); 
+    Route::post('teacher/single_submit_marks_register', [ExaminationsController::class, 'single_submit_marks_register']); 
+
+
+    Route::get('teacher/attendance/student', [AttendanceController::class, 'AttendanceStudentTeacher']);
+    Route::post('teacher/attendance/student/save', [AttendanceController::class, 'AttendanceStudentSubmit']);
+
+    Route::get('teacher/attendance/report', [AttendanceController::class, 'AttendanceReportTeacher']);
+
+    Route::get('teacher/my_notice_board', [CommunicateController::class, 'MyNoticeBoardTeacher']);
+
+    // Home Work:
+    Route::get('teacher/homework/homework', [HomeworkController::class, 'HomeworkTeacher']);
+    Route::get('teacher/homework/homework/add', [HomeworkController::class, 'addTeacher']);
+    Route::post('teacher/ajax_get_subject', [HomeworkController::class, 'ajax_get_subject']);
+    Route::post('teacher/homework/homework/add', [HomeworkController::class, 'insertTeacher']);
+    Route::get('teacher/homework/homework/edit/{id}', [HomeworkController::class, 'editTeacher']);
+    Route::post('teacher/homework/homework/edit/{id}', [HomeworkController::class, 'updateTeacher']);
+
+    Route::get('teacher/homework/homework/delete/{id}', [HomeworkController::class, 'delete']); 
+    
+    Route::get('teacher/homework/homework/submitted/{id}', [HomeworkController::class, 'submittedTeacher']);
 });
 
 Route::group(['middleware' => 'student'], function(){

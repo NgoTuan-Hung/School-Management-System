@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\ClassModel;
 use App\Models\ClassSubjectModel;
 use App\Models\ExamScheduleModel;
+use App\Models\AssignClassTeacherModel;
+use App\Models\User;
+
+
+
+
 
 
 
@@ -165,6 +171,71 @@ class ExaminationsController extends Controller
         }
 
         return redirect()->back()->with('success', "Exam Schedule Successfully Saved");
+    }
+
+    // Teacher :
+    public function MyExamTimetableTeacher()
+    {
+        $result = array();
+        $getClass = AssignClassTeacherModel::getMyClassSubjectGroup(Auth::user()->id);
+        // dd($getClass);
+        foreach($getClass as $class)
+        {
+            $dataC = array();
+            $dataC['class_name'] =  $class->class_name;
+
+            $getExam = ExamScheduleModel::getExam($class->class_id);
+            // dd($getExam);
+            $examArray = array();
+            foreach($getExam as $exam)
+            {
+                $dataE = array();
+                $dataE['exam_name'] = $exam->exam_name;
+
+                $getExamTimetable = ExamScheduleModel::getExamTimetable($exam->exam_id, $class->class_id);
+                $subjectArray = array();
+                foreach($getExamTimetable as $valueS)
+                {
+                    $dataS = array();
+                    $dataS['subject_name'] = $valueS->subject_name;
+                    $dataS['exam_date'] = $valueS->exam_date;
+                    $dataS['start_time'] = $valueS->start_time;
+                    $dataS['end_time'] = $valueS->end_time;
+                    $dataS['room_number'] = $valueS->room_number;
+                    $dataS['full_marks'] = $valueS->full_marks;
+                    $dataS['passing_mark'] = $valueS->passing_mark;
+                    $subjectArray[] = $dataS;
+                }
+
+                $dataE['subject'] = $subjectArray;
+                $examArray[] = $dataE;
+            }
+            $dataC['exam'] = $examArray;
+
+            $result[] = $dataC;
+        }
+
+        $data['getRecord'] = $result;
+
+        $data['header_title'] = "My Exam Timetable";
+        return view('teacher.my_exam_timetable',$data);   
+    }
+
+    public function marks_register_teacher(Request $request)
+    {
+        $data['getClass'] = AssignClassTeacherModel::getMyClassSubjectGroup(Auth::user()->id);
+        $data['getExam'] = ExamScheduleModel::getExamTeacher(Auth::user()->id);
+        
+        if(!empty($request->get('exam_id')) && !empty($request->get('class_id')))
+        {
+            $data['getSubject'] = ExamScheduleModel::getSubject($request->get('exam_id'), $request->get('class_id'));
+            // dd($data['getSubject']);
+
+            $data['getStudent'] = User::getStudentClass($request->get('class_id'));
+        }
+        
+        $data['header_title'] = "Marks Register";
+        return view('teacher.marks_register',$data);   
     }
 
 }
