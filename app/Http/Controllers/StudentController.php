@@ -30,11 +30,9 @@ class StudentController extends Controller
         $request->validate([
             'email' => 'required|email|unique:users',
             'weight' => 'max:10',
-            'blood_group' => 'max:10',
             'mobile_number' => 'max:15|min:8',
             'admission_number' => 'max:50',
             'roll_number' => 'max:50',
-            'caste' => 'max:50',
             'religion' => 'max:50',
             'height' => 'max:10',
         ], [
@@ -45,10 +43,7 @@ class StudentController extends Controller
         
             // Custom error messages for 'weight'
             'weight.max' => 'Weight must not exceed 10 characters.',
-        
-            // Custom error messages for 'blood_group'
-            'blood_group.max' => 'Blood group must not exceed 10 characters.',
-        
+                
             // Custom error messages for 'mobile_number'
             'mobile_number.max' => 'Mobile number must not exceed 15 characters.',
             'mobile_number.min' => 'Mobile number must be at least 8 characters.',
@@ -58,10 +53,7 @@ class StudentController extends Controller
         
             // Custom error messages for 'roll_number'
             'roll_number.max' => 'Roll number must not exceed 50 characters.',
-        
-            // Custom error messages for 'caste'
-            'caste.max' => 'Caste must not exceed 50 characters.',
-        
+                
             // Custom error messages for 'religion'
             'religion.max' => 'Religion must not exceed 50 characters.',
         
@@ -95,8 +87,6 @@ class StudentController extends Controller
 
             $student->profile_pic = $filename;            
         }
-
-        $student->caste = trim($request->caste);
         $student->religion = trim($request->religion);
         $student->mobile_number = trim($request->mobile_number);
 
@@ -105,7 +95,6 @@ class StudentController extends Controller
             $student->admission_date = trim($request->admission_date);    
         }
 
-        $student->blood_group = trim($request->blood_group);
         $student->height = trim($request->height);
         $student->weight = trim($request->weight);
         $student->status = trim($request->status);
@@ -141,11 +130,9 @@ class StudentController extends Controller
         $request->validate([
             'email' => 'required|email|unique:users,email,'.$id,
             'weight' => 'max:10',
-            'blood_group' => 'max:10',
             'mobile_number' => 'max:15|min:8',            
             'admission_number' => 'max:50',
             'roll_number' => 'max:50',
-            'caste' => 'max:50',
             'religion' => 'max:50',
             'height' => 'max:10'            
         ], [
@@ -155,13 +142,11 @@ class StudentController extends Controller
             'email.unique' => 'This email is already taken. Please choose another one.',
             
             'weight.max' => 'Weight cannot be more than 10 characters.',
-            'blood_group.max' => 'Blood group name cannot be more than 10 characters.',
             'mobile_number.min' => 'Mobile number must be at least 8 digits.',
             'mobile_number.max' => 'Mobile number cannot exceed 15 digits.',
             
             'admission_number.max' => 'Admission number can only have a maximum of 50 characters.',
             'roll_number.max' => 'Roll number can only have a maximum of 50 characters.',
-            'caste.max' => 'Caste field can only have a maximum of 50 characters.',
             'religion.max' => 'Religion field can only have a maximum of 50 characters.',
             
             'height.max' => 'Height can only have a maximum of 10 characters.'
@@ -198,7 +183,6 @@ class StudentController extends Controller
         }
 
 
-        $student->caste = trim($request->caste);
         $student->religion = trim($request->religion);
         $student->mobile_number = trim($request->mobile_number);
 
@@ -207,7 +191,6 @@ class StudentController extends Controller
             $student->admission_date = trim($request->admission_date);    
         }
         
-        $student->blood_group = trim($request->blood_group);
         $student->height = trim($request->height);
         $student->weight = trim($request->weight);
         $student->status = trim($request->status);

@@ -225,11 +225,6 @@ class User extends Authenticatable
                             $return = $return->where('users.gender','=', request()->get('gender'));
                         }
 
-                        if(!empty(request()->get('caste')))
-                        {
-                            $return = $return->where('users.caste','like', '%'.request()->get('caste').'%');
-                        }
-
                         if(!empty(request()->get('religion')))
                         {
                             $return = $return->where('users.religion','like', '%'.request()->get('religion').'%');
@@ -239,12 +234,7 @@ class User extends Authenticatable
                         {
                             $return = $return->where('users.mobile_number','like', '%'.request()->get('mobile_number').'%');
                         }
-
-                        if(!empty(request()->get('blood_group')))
-                        {
-                            $return = $return->where('users.blood_group','like', '%'.request()->get('blood_group').'%');
-                        }
-
+                        
                         if(!empty(request()->get('admission_date')))
                         {
                             $return = $return->whereDate('users.admission_date','=', request()->get('admission_date'));
