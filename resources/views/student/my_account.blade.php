@@ -61,12 +61,6 @@
                     </div>  
 
 
-                     <div class="form-group col-md-6">
-                      <label>Caste <span style="color: red;"></span></label>
-                      <input type="text" class="form-control" value="{{ old('caste', $getRecord->caste) }}" name="caste"  placeholder="Caste">
-                      <div style="color:red">{{ $errors->first('caste') }}</div>
-                    </div>  
-
                     <div class="form-group col-md-6">
                       <label>Religion <span style="color: red;"></span></label>
                       <input type="text" class="form-control" value="{{ old('religion', $getRecord->religion) }}" name="religion"  placeholder="Religion">
@@ -90,11 +84,6 @@
                       @endif
                     </div> 
 
-                     <div class="form-group col-md-6">
-                      <label>Blood Group <span style="color: red;"></span></label>
-                      <input type="text" class="form-control" name="blood_group" value="{{ old('blood_group', $getRecord->blood_group) }}" placeholder="Blood Group">
-                      <div style="color:red">{{ $errors->first('blood_group') }}</div>
-                    </div> 
 
 
                      <div class="form-group col-md-6">
