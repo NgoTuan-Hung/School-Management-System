@@ -130,6 +130,16 @@
           </p>
         </a>
       </li>
+
+      <li class="nav-item">
+        <a href="{{ url('admin/register/list') }}" class="nav-link @if(Request::segment(2) == 'register') active @endif">
+          <i class="nav-icon far fa-user"></i>
+          <p>
+            Register
+          </p>
+        </a>
+      </li>
+      
       <li class="nav-item">
         <a href="{{url('admin/admin/list') }}" class="nav-link @if(Request::segment(2)=='admin') active @endif">
           <i class="nav-icon far fa-user"></i>

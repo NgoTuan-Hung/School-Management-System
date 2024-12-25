@@ -23,7 +23,9 @@ class ClassSubjectController extends Controller
     public function add()
     {
         $data['getClass'] = ClassModel::getClass();
+        // dd($data['getClass']);
         $data['getSubject'] = SubjectModel::getSubject();
+        // dd($data['getSubject']);
         $data['getRecord'] = ClassSubjectModel::getRecord();
         $data['header_title'] = "Subject Assign Add";
         return view('admin.assign_subject.add',$data);

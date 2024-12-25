@@ -44,7 +44,8 @@ class DashboardController extends Controller
                 $data['TotalExam'] = ExamModel::getTotalExam();
                 $data['TotalClass'] = ClassModel::getTotalClass();
                 $data['TotalSubject'] = SubjectModel::getTotalSubject();
-                
+                $data['TotalRegister'] = User::getTotalRegister();
+
                 return view('admin.dashboard', $data);
             }
             else if(Auth::user()-> user_type== 2)

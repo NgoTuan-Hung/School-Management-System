@@ -43,15 +43,23 @@ class ClassModel extends Model
 
     static public function getClass()
     {
-        $return = ClassModel::select('class.*')
-                    ->join('users', 'users.id', 'class.created_by')
-                    ->where('class.is_delete', '=', 0)
-                    ->where('class.status', '=', 0)
-                    ->orderBy('class.name', 'asc')
-                    ->get();
-
+        $return = ClassModel::select(
+                'class.*', 
+                'teachers.name as teacher_name', 
+                'teachers.profile_pic as teacher_avatar'
+            )
+            ->join('users as creators', 'creators.id', '=', 'class.created_by')
+            ->join('assign_class_teacher', 'assign_class_teacher.class_id', '=', 'class.id')
+            ->join('users as teachers', 'teachers.id', '=', 'assign_class_teacher.teacher_id')
+            ->where('class.is_delete', '=', 0)
+            ->where('class.status', '=', 0)
+            ->orderBy('class.name', 'asc')
+            ->get();
+    
         return $return;
     }
+    
+
 
     static public function getTotalClass()
     {
@@ -90,6 +98,18 @@ class ClassModel extends Model
             return url('upload/class/user.jpg');
         }
     }
+
+
+    public function getTeacherProfileDirect()
+{
+    if (!empty($this->teacher_avatar) && file_exists('upload/profile/' . $this->teacher_avatar)) {
+        return url('upload/profile/' . $this->teacher_avatar);
+    } else {
+        // Ảnh mặc định nếu giáo viên không có ảnh
+        return url('upload/profile/user.jpg');
+    }
+}
+
 
 
 }

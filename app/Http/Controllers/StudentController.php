@@ -111,6 +111,7 @@ class StudentController extends Controller
         $student->status = trim($request->status);
         $student->email = trim($request->email);
         $student->password = Hash::make($request->password);
+        $student->is_student = 0; 
         $student->user_type = 3;
         $student->save();
 

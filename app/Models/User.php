@@ -53,6 +53,15 @@ class User extends Authenticatable
                             ->where('users.user_type','=',$type)
                             ->count();
     }
+
+    static public function getTotalStudent(){
+        return self::select('users.*')
+                            ->where('users.user_type','=',3)
+                            ->where('users.is_student','=',0)
+                            ->count();
+    }
+
+    
     static public function getAdmin($remove_pagination = 0)
     {
         $return = self::select('users.*')
@@ -188,6 +197,7 @@ class User extends Authenticatable
                         ->join('users as parent','parent.id','=','users.parent_id','left')
                         ->join('class','class.id','=','users.class_id','left')
                         -> where('users.user_type','=',3)
+                        -> where('users.is_student','!=',1)
                         -> where('users.is_delete','=',0);
                         if(!empty(request()->get('name')))
                         {
@@ -529,5 +539,25 @@ class User extends Authenticatable
                         ->orderBy('users.id', 'desc')
                         ->get();        
     }
+
+    static public function getRegister()
+    {
+        $return = self::select('users.*','class.name as class_name')
+                        ->join('class', 'class.id', '=', 'users.class_id')
+                        ->where('user_type','=',3)
+                        ->where('is_student','=',1)
+                        ->where('users.is_delete','=',0)
+                        ->paginate(10);
+        return $return;
+    }
+
+
+    static public function getTotalRegister(){
+        return self::select('users.*')
+                            ->where('users.is_student','=',1)
+                            ->count();
+    }
+
+    
 
 }

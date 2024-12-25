@@ -145,8 +145,6 @@
                 <th>Current Address </th>
                 <th>Permanent Address </th>
                 <th>Qualification</th>
-                <th>Work Experience</th>
-                <th>Note</th>
                 <th>Status</th>
                 <th>Created Date</th>
                 <th>Action</th>
@@ -182,8 +180,6 @@
                         
                         <td>{{ $value->permanent_address }}</td>
                         <td>{{ $value->qualification }}</td>
-                        <td>{{ $value->work_experience }}</td>
-                        <td>{{ $value->note }}</td>
                         <td>{{ ($value->status == 0) ? 'Active' : 'Inactive' }}</td>
                         
 
