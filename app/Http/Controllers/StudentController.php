@@ -242,5 +242,12 @@ class StudentController extends Controller
             abort(404);
         }
     }
+
+    public function MyStudent()
+    {
+        $data['getRecord'] = User::getTeacherStudent(Auth::user()->id);
+        $data['header_title'] = "My Student List";
+        return view('teacher.my_student',$data);
+    }
     
 }

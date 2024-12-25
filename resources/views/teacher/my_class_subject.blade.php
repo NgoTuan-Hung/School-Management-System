@@ -67,7 +67,7 @@
                           <td>{{ $value->subject_type }}</td>
                           <td>
                             @php
-                            $ClassSubject = $value->getMyTimeTable($value->class_id, $value->subject_id);
+                            // $ClassSubject = $value->getMyTimeTable($value->class_id, $value->subject_id);
                             @endphp
                             @if(!empty($ClassSubject))
                               {{ date('h:i A',strtotime($ClassSubject->start_time)) }} to {{ date('h:i A',strtotime($ClassSubject->end_time)) }}

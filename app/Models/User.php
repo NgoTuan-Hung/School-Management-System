@@ -47,6 +47,12 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+
+    static public function getTotalUser($type){
+        return self::select('users.*')
+                            ->where('users.user_type','=',$type)
+                            ->count();
+    }
     static public function getAdmin($remove_pagination = 0)
     {
         $return = self::select('users.*')
@@ -144,6 +150,23 @@ class User extends Authenticatable
                        
         $return = $return -> orderBy('id','desc')
         -> paginate(10);
+        return $return;
+    }
+
+    static public function getTeacherStudentCount($teacher_id)
+    {
+        $return = self::select('users.id')
+                        ->join('class', 'class.id', '=', 'users.class_id')
+                        ->join('assign_class_teacher', 'assign_class_teacher.class_id', '=', 'class.id')
+                        ->where('assign_class_teacher.teacher_id', '=', $teacher_id)   
+                        ->where('assign_class_teacher.status','=',0)                     
+                        ->where('assign_class_teacher.is_delete','=',0)                     
+                        ->where('users.user_type','=',3)
+                        ->where('users.is_delete','=',0)
+                        ->orderBy('users.id', 'desc')
+                        ->groupBy('users.id')
+                        ->count();
+
         return $return;
     }
     
@@ -255,7 +278,7 @@ class User extends Authenticatable
     }
 
 
-    //parent
+    // parent side work
     static public function getMyStudent($parent_id)
     {
         $return = self::select('users.*', 'class.name as class_name','parent.name as parent_name')
@@ -281,7 +304,25 @@ class User extends Authenticatable
                         ->count();
         return $return;
     }
+
+
     
+    static public function getTeacherStudent($teacher_id)
+{
+    $return = self::select('users.*', 'class.name as class_name')
+                    ->join('class', 'class.id', '=', 'users.class_id')
+                    ->join('assign_class_teacher', 'assign_class_teacher.class_id', '=', 'class.id')
+                    ->where('assign_class_teacher.teacher_id', '=', $teacher_id)   
+                    ->where('assign_class_teacher.status', '=', 0)                     
+                    ->where('assign_class_teacher.is_delete', '=', 0)                     
+                    ->where('users.user_type', '=', 3)
+                    ->where('users.is_delete', '=', 0)
+                    ->orderBy('users.id', 'desc');
+    $return = $return->paginate(20);
+
+    return $return;
+}
+
 
     static public function getSingleClass($id)
     {
@@ -290,6 +331,8 @@ class User extends Authenticatable
                     ->where('users.id','=',$id)
                     ->first();
     }
+
+    
     static public function getParent($remove_pagination=0)
     {
         $return = self::select('users.*')
@@ -396,6 +439,46 @@ class User extends Authenticatable
 
             return $return;
         }
+    }
+
+    static public function getMyStudentIds($parent_id)
+    {
+        $return = self::select('users.id')
+                        ->join('users as parent','parent.id', '=', 'users.parent_id')
+                        ->join('class', 'class.id', '=', 'users.class_id', 'left')
+                        ->where('users.user_type','=',3)
+                        ->where('users.parent_id','=',$parent_id)
+                        ->where('users.is_delete','=',0)
+                        ->orderBy('users.id', 'desc')
+                        ->get();
+
+        $student_ids = array();
+        foreach($return as $value)
+        {
+            $student_ids[] = $value->id;
+        }
+
+        return $student_ids;
+    }
+
+    static public function getMyStudentClassIds($parent_id)
+    {
+        $return = self::select('users.class_id')
+                        ->join('users as parent','parent.id', '=', 'users.parent_id')
+                        ->join('class', 'class.id', '=', 'users.class_id')
+                        ->where('users.user_type','=',3)
+                        ->where('users.parent_id','=',$parent_id)
+                        ->where('users.is_delete','=',0)
+                        ->orderBy('users.id', 'desc')
+                        ->get();
+
+        $class_ids = array();
+        foreach($return as $value)
+        {
+            $class_ids[] = $value->class_id;
+        }
+
+        return $class_ids;
     }
 
     static public function getEmailSingle($email)

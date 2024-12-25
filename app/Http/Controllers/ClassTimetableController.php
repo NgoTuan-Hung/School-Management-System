@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-
 class ClassTimetableController extends Controller
 {
     public function list(Request $request)
