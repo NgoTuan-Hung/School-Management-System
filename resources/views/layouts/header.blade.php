@@ -358,35 +358,6 @@
           </li>
 
 
-
-         <li class="nav-item  @if(Request::segment(2) == 'attendance') menu-is-opening menu-open @endif">
-            <a href="#" class="nav-link  @if(Request::segment(2) == 'attendance') active @endif">
-              <i class="nav-icon fas fa-table"></i>
-              <p>
-                Attendance
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-
-              <li class="nav-item">
-                <a href="{{ url('teacher/attendance/student') }}" class="nav-link @if(Request::segment(3) == 'student') active @endif">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Student Attendance</p>
-                </a>
-              </li>
-
-               <li class="nav-item">
-                <a href="{{ url('teacher/attendance/report') }}" class="nav-link @if(Request::segment(3) == 'report') active @endif">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Attendance Report</p>
-                </a>
-              </li>
-             
-            </ul>
-        </li>
-
-
          <li class="nav-item  @if(Request::segment(2) == 'homework') menu-is-opening menu-open @endif">
             <a href="#" class="nav-link  @if(Request::segment(2) == 'homework') active @endif">
               <i class="nav-icon fas fa-table"></i>
