@@ -38,6 +38,7 @@ class ClassController extends Controller
             $save->profile_pic = $filename;
         $save -> save();
         }
+
         return redirect('admin/class/list')-> with('success','New Class successfully created');
     }
 

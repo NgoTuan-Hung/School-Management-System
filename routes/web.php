@@ -23,6 +23,9 @@ use App\Http\Controllers\HomeworkController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\CrouseDetail;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ContentController
+;
+
 
 
 
@@ -82,6 +85,14 @@ Route::post('reset/{token}',[AuthController::class,'PostReset']);
 //Authentication user blocking different user enter
 Route::group(['middleware' => 'admin'], function(){
 
+
+    //Content Manager
+    Route::get('admin/cms/list', [ContentController::class, 'list']);
+    Route::get('admin/cms/edit/{id}', [ContentController::class, 'edit']);
+    Route::post('admin/cms/edit/{id}', [ContentController::class, 'update']);
+    
+
+    // register student 2 class on homepage:
     Route::get('admin/register/list', [RegisterController::class, 'list']);
     Route::get('admin/register/delete/{id}', [RegisterController::class, 'delete']);
     Route::get('admin/register/approve/{id}', [RegisterController::class, 'approve']);

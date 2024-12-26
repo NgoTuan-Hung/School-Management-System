@@ -305,6 +305,18 @@
           </p>
         </a>
       </li>
+
+      <li class="nav-item">
+        <a href="{{ url('admin/cms/list') }}" class="nav-link @if(Request::segment(2) == 'cms') active @endif">
+          <i class="nav-icon far fa-user"></i>
+          <p>
+            CMS
+          </p>
+        </a>
+      </li>
+
+
+      {{-- student side --}}
       
       @elseif(Auth::user()->user_type == 2)
 

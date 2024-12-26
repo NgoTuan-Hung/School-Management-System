@@ -88,10 +88,6 @@
                   </div>
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> test
                   <div class="form-group col-md-2">
                     <label>Religion</label>
                     <input type="text" class="form-control" name="religion" value="{{ Request::get('religion') }}"  placeholder="Religion">

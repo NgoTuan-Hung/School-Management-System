@@ -32,9 +32,9 @@
 
 
           
-            {{-- <div class="card">
+            <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Search Admin</h3>
+                <h3 class="card-title">Search Register</h3>
               </div>
               <form method="get" action="">
                 <div class="card-body">
@@ -50,21 +50,27 @@
                     <input type="text" class="form-control" name="email" value="{{ Request::get('email') }}"  placeholder="Email">
                   </div>
 
-                    <div class="form-group col-md-3">
-                    <label>Date</label>
-                    <input type="date" class="form-control" name="date" value="{{ Request::get('date') }}"  placeholder="Email">
+                  <div class="form-group col-md-3">
+                    <label>Class Name</label>
+                    <select class="form-control getClass" name="class_id" >
+                        <option value="">Select</option>
+                        @foreach($getClass as $class)
+                          <option {{ (Request::get('class_id') == $class->id) ? 'selected' : '' }} value="{{ $class->id }}">{{ $class->name }}</option>
+                        @endforeach
+                    </select>
+                    
                   </div>
 
                   <div class="form-group col-md-3">
                     <button class="btn btn-primary" type="submit" style="margin-top: 30px;">Search</button>
-                    <a href="{{ url('admin/admin/list') }}" class="btn btn-success" style="margin-top: 30px;">Reset</a>
+                    <a href="{{ url('admin/register/list') }}" class="btn btn-success" style="margin-top: 30px;">Reset</a>
 
                   </div>
 
                   </div>
                 </div>
               </form>
-            </div> --}}
+            </div> 
          
 
 

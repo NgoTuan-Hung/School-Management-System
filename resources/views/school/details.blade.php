@@ -52,7 +52,7 @@
 
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Course Fee</h5>
-              <p>$165</p>
+              <p>{{ $getRecord->amount }}</p>
             </div>
 
             <div class="course-info d-flex justify-content-between align-items-center">

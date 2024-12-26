@@ -7,11 +7,11 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section dark-background">
 
-      <img src="{{url('public/assets/img/hero-bg.jpg')}}" alt="" data-aos="fade-in">
-
+      @foreach ($getContent as $content )
+      <img src="{{$content->getProfileDirect()}}" alt="" data-aos="fade-in">
       <div class="container">
-        <h2 data-aos="fade-up" data-aos-delay="100">Learning Today,<br>Leading Tomorrow</h2>
-        <p data-aos="fade-up" data-aos-delay="200">We are team of talented designers making websites with Bootstrap</p>
+        <h2 data-aos="fade-up" data-aos-delay="100">{{$content->title}}</h2>
+        <p data-aos="fade-up" data-aos-delay="200">{{$content->small_title}}</p>
         <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
           <a href="{{url('school/crouse')}}" class="btn-get-started">Get Started</a>
         </div>
@@ -27,20 +27,14 @@
         <div class="row gy-4">
 
           <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
-            <img src="{{url('public/assets/img/about.jpg')}}" class="img-fluid" alt="">
+            <img src="{{$content->getProfileDirectUs()}}" class="img-fluid" alt="">
           </div>
 
           <div class="col-lg-6 order-2 order-lg-1 content" data-aos="fade-up" data-aos-delay="200">
-            <h3>Voluptatem dignissimos provident quasi corporis</h3>
+            <h3>About Us</h3>
+            {!! $content->about_us !!}
             <p class="fst-italic">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-              magna aliqua.
             </p>
-            <ul>
-              <li><i class="bi bi-check-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span></li>
-            </ul>
             <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
           </div>
 
@@ -49,7 +43,10 @@
       </div>
 
     </section><!-- /About Section -->
+        
+      @endforeach
 
+      
     <!-- Counts Section -->
     <section id="counts" class="section counts light-background">
 

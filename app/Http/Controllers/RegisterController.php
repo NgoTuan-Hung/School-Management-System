@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\ClassModel;
+
+
 
 
 class RegisterController extends Controller
@@ -11,6 +14,7 @@ class RegisterController extends Controller
     public function list(){
 
         $data['getRecord'] = User::getRegister();
+        $data['getClass'] = ClassModel::getClass();
         $data['header_title'] = "Admin List";
         return view('admin.register.list',$data);
 

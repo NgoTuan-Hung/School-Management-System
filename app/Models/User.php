@@ -530,14 +530,28 @@ class User extends Authenticatable
                         ->get();        
     }
 
-    static public function getRegister()
+    static public function getRegister($remove_pagination = 0)
     {
         $return = self::select('users.*','class.name as class_name')
                         ->join('class', 'class.id', '=', 'users.class_id')
                         ->where('user_type','=',3)
                         ->where('is_student','=',1)
-                        ->where('users.is_delete','=',0)
-                        ->paginate(10);
+                        ->where('users.is_delete','=',0);
+                        if(!empty(request()->get('class_id'))){
+                            $return = $return->where('users.class_id', '=', request()->get('class_id'));
+                        }
+                        if(!empty(request()->get('name')))
+                        {
+                            $return = $return->where('users.name', 'like', '%'.request()->get('name').'%');
+                        }
+                        if(!empty(request()->get('email')))
+        {
+            $return = $return->where('users.email', 'like', '%'.request()->get('email').'%');
+        }
+
+        $return = $return->orderBy('users.id', 'desc')
+                        ->paginate(20);
+
         return $return;
     }
 

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\ClassSubjectModel;
 use App\Models\User;
 use App\Models\ClassModel;
+use App\Models\HomeContentModel;
+
+
 
 
 
@@ -19,6 +22,7 @@ class HomePageController extends Controller
         $data['getTotalCrouse'] = ClassSubjectModel::getTotalCrouse();
         $data['header_title'] = 'Home Page';
         $data['teachers'] = User::getTeacher();
+        $data['getContent'] = HomeContentModel::getContent();
         return view('school.home',$data);
     }
 
