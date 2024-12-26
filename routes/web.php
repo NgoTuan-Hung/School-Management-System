@@ -20,6 +20,11 @@ use App\Http\Controllers\AssignClassTeacher;
 use App\Http\Controllers\AssignClassTeacherController;
 use App\Http\Controllers\ExaminationsController;
 use App\Http\Controllers\HomeworkController;
+use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\CrouseDetail;
+use App\Http\Controllers\RegisterController;
+
+
 
 
 
@@ -47,9 +52,22 @@ use App\Http\Controllers\HomeworkController;
 //     return view('welcome');
 // });
 
+Route::get('/', [HomePageController::class, 'ShowHome']);
+
+Route::prefix('school')->controller(HomePageController::class)->group(function () {
+    Route::get('/', [HomePageController::class, 'ShowHome']);
+    Route::get('home', [HomePageController::class, 'ShowHome']);
+    Route::get('trainers', [HomePageController::class, 'ShowTrainer']);
+    Route::get('crouses', [HomePageController::class, 'ShowCrouse']);
+    Route::get('details/{id}', [CrouseDetail::class, 'ShowCrouseDetails']);
+    Route::post('details/{id}', [CrouseDetail::class, 'RegisterStudent']);
+
+
+});
+
 
 // Route Login, Logout
-Route::get('/',[AuthController::class,'login']);
+Route::get('login',[AuthController::class,'login']);
 Route::post('login',[AuthController::class,'AuthLogin']);
 Route::get('logout',[AuthController::class,'logout']);
 //Route forgot password
@@ -63,6 +81,12 @@ Route::post('reset/{token}',[AuthController::class,'PostReset']);
 
 //Authentication user blocking different user enter
 Route::group(['middleware' => 'admin'], function(){
+
+    Route::get('admin/register/list', [RegisterController::class, 'list']);
+    Route::get('admin/register/delete/{id}', [RegisterController::class, 'delete']);
+    Route::get('admin/register/approve/{id}', [RegisterController::class, 'approve']);
+
+
     Route::get('admin/dashboard',[DashboardController::class,'dashboard']);
     Route::get('admin/admin/list',[AdminController::class,'list']);
     Route::get('admin/admin/add',[AdminController::class,'add']);

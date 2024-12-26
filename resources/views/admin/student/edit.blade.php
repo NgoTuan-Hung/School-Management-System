@@ -80,7 +80,8 @@
                       <input type="date" class="form-control" required value="{{ old('date_of_birth', $getRecord->date_of_birth) }}" name="date_of_birth" >
                       <div style="color:red">{{ $errors->first('date_of_birth') }}</div>
                     </div>  
-                     
+
+
 
                     <div class="form-group col-md-6">
                       <label>Religion <span style="color: red;"></span></label>
@@ -113,14 +114,14 @@
 
 
                      <div class="form-group col-md-6">
-                      <label>Height <span style="color: red;"></span></label>
+                      <label>Height(cm) <span style="color: red;"></span></label>
                       <input type="text" class="form-control" name="height" value="{{ old('height', $getRecord->height) }}" placeholder="Height">
                       <div style="color:red">{{ $errors->first('height') }}</div>
                     </div> 
 
 
                      <div class="form-group col-md-6">
-                      <label>Weight <span style="color: red;"></span></label>
+                      <label>Weight(kg) <span style="color: red;"></span></label>
                       <input type="text" class="form-control" name="weight" value="{{ old('weight', $getRecord->weight) }}" placeholder="Weight">
                       <div style="color:red">{{ $errors->first('weight') }}</div>
                     </div> 

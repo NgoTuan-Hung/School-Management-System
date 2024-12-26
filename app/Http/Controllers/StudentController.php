@@ -43,7 +43,8 @@ class StudentController extends Controller
         
             // Custom error messages for 'weight'
             'weight.max' => 'Weight must not exceed 10 characters.',
-                
+        
+            
             // Custom error messages for 'mobile_number'
             'mobile_number.max' => 'Mobile number must not exceed 15 characters.',
             'mobile_number.min' => 'Mobile number must be at least 8 characters.',
@@ -53,7 +54,7 @@ class StudentController extends Controller
         
             // Custom error messages for 'roll_number'
             'roll_number.max' => 'Roll number must not exceed 50 characters.',
-                
+        
             // Custom error messages for 'religion'
             'religion.max' => 'Religion must not exceed 50 characters.',
         
@@ -100,6 +101,7 @@ class StudentController extends Controller
         $student->status = trim($request->status);
         $student->email = trim($request->email);
         $student->password = Hash::make($request->password);
+        $student->is_student = 0; 
         $student->user_type = 3;
         $student->save();
 
